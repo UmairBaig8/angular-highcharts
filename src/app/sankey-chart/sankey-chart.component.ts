@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import * as HC_sankey from 'highcharts/modules/sankey';
+HC_sankey(Highcharts);
 
 @Component({
   selector: 'app-sankey-chart',
