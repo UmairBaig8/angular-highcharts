@@ -7,43 +7,87 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./sankey-chart.component.css'],
 })
 export class SankeyChartComponent implements OnInit {
-  Highcharts: typeof Highcharts = Highcharts; // required
-  chartConstructor: string = 'chart'; // optional string, defaults to 'chart'
+  Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {
+    chart: {
+      styledMode: false,
+    },
+
+    title: {
+      text: '',
+    },
+
+    subtitle: {
+      text: '',
+    },
+
     series: [
       {
-        type: 'sankey',
+        keys: ['from', 'to', 'weight'],
+        minLinkWidth: 50,
+        dataLabels: {
+          enabled: true,
+        },
         data: [
-          { from: 'Oil', to: 'Transportation', weight: 94 },
-          { from: 'Natural Gas', to: 'Transportation', weight: 3 },
-          { from: 'Coal', to: 'Transportation', weight: 0 },
-          { from: 'Renewable', to: 'Transportation', weight: 0 },
-          { from: 'Nuclear', to: 'Transportation', weight: 3 },
-          { from: 'Oil', to: 'Industrial', weight: 41 },
-          { from: 'Natural Gas', to: 'Industrial', weight: 40 },
-          { from: 'Coal', to: 'Industrial', weight: 7 },
-          { from: 'Renewable', to: 'Industrial', weight: 11 },
-          { from: 'Nuclear', to: 'Industrial', weight: 0 },
-          { from: 'Oil', to: 'Residential & Commercial', weight: 17 },
-          { from: 'Natural Gas', to: 'Residential & Commercial', weight: 76 },
-          { from: 'Coal', to: 'Residential & Commercial', weight: 1 },
-          { from: 'Renewable', to: 'Residential & Commercial', weight: 7 },
-          { from: 'Nuclear', to: 'Residential & Commercial', weight: 0 },
-          { from: 'Oil', to: 'Electric Power', weight: 1 },
-          { from: 'Natural Gas', to: 'Electric Power', weight: 18 },
-          { from: 'Coal', to: 'Electric Power', weight: 48 },
-          { from: 'Renewable', to: 'Electric Power', weight: 11 },
-          { from: 'Nuclear', to: 'Electric Power', weight: 22 },
+          {
+            from: 'Category=AdvFirewall',
+            to: 'request_subject=10.136.112.114',
+            weight: 329,
+          },
+          {
+            from: 'Category=AdvFirewall',
+            to: 'request_subject=others',
+            weight: 16909,
+          },
+          {
+            from: 'request_subject=10.136.112.114',
+            to: 'month_of_year=December',
+            weight: 104,
+          },
+          {
+            from: 'request_subject=10.136.112.114',
+            to: 'month_of_year=others',
+            weight: 329 - 104,
+          },
+
+          { from: 'month_of_year=December', to: 'status=Fail', weight: 10 },
+          { from: 'month_of_year=December', to: 'status=Pass', weight: 94 },
         ],
+        nodes: [
+          {
+            id: 'Category=AdvFirewall',
+            color: '#aaf4f3',
+          },
+          {
+            id: 'request_subject=10.136.112.114',
+            color: '#72edeb',
+          },
+          {
+            id: 'request_subject=others',
+            color: '#72edeb',
+          },
+          {
+            id: 'month_of_year=December',
+            color: '#39e6e3',
+          },
+          {
+            id: 'month_of_year=others',
+            color: '#39e6e3',
+          },
+          {
+            id: 'status=Fail',
+            color: '#f98686',
+          },
+          {
+            id: 'status=Pass',
+            color: '#89f655',
+          },
+        ],
+        type: 'sankey',
+        name: '',
       },
     ],
   };
-  chartCallback: Highcharts.ChartCallbackFunction = function (chart) {
-    console.log('Chart rendered');
-  }; // optional function, defaults to null
-  updateFlag: boolean = false; // optional boolean
-  oneToOneFlag: boolean = true; // optional boolean, defaults to false
-  runOutsideAngularFlag: boolean = false; // optional boolean, defaults to false
 
   constructor() {}
 
